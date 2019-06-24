@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Inimigo : MonoBehaviour {
 
-
     public Transform target; // alvo para o inimigo seguir
 
     public float speed = 5f;
@@ -16,7 +15,6 @@ public class Inimigo : MonoBehaviour {
 
     [SerializeField]
     GameObject bullet;
-
 
 	// Use this for initialization
 	void Start () {
@@ -48,7 +46,6 @@ public class Inimigo : MonoBehaviour {
         
        
     }
-
 
     void followTarget()
     {
@@ -88,7 +85,6 @@ public class Inimigo : MonoBehaviour {
 
     }
 
-
     //função para atirar num alvo
     void shootAt(Transform target)
     {
@@ -97,8 +93,5 @@ public class Inimigo : MonoBehaviour {
 
         GameObject go =  Instantiate(bullet, instantiatePosition, Quaternion.identity);
         //go.transform.LookAt(target);
-        
-       
-
     }
 }

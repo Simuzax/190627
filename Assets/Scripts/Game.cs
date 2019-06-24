@@ -22,9 +22,9 @@ public class Game : MonoBehaviour
     // Use this for initialization
     void Start () {
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 6; i++)
         {
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < 6; j++)
             {
                 GameObject go = Instantiate(coinPrefab, new Vector3(i * 1.0f, 2, j * -1.0f), Quaternion.identity);
 
@@ -55,12 +55,6 @@ public class Game : MonoBehaviour
                 
             }
         }
-
-        if(listCoins.Count <= 0)
-        {
-            SceneManager.LoadScene(1);
-        }
-       
 	}
 
     public void RemoveCoinFromList(GameObject coin)
