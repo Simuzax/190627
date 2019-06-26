@@ -1,43 +1,46 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CameraScript : MonoBehaviour {
-
-
-    float yaw;
-    float pitch;
-    [SerializeField]
-    float mouseSensitivity = 3f;
-    [SerializeField]
-    float distanceFromTargetX;
-    [SerializeField]
-    float distanceFromTargetY;
+public class CameraScript : MonoBehaviour
+{
+    private float yaw;
+    private float pitch;
 
     [SerializeField]
-    float pitchMin = -40;
-    [SerializeField]
-    float pitchMax = 80;
+    private float mouseSensitivity = 3f;
 
     [SerializeField]
-    bool lockCursor;
-
-    Vector3 currentRotation;
-    [SerializeField]
-    float rotationSmoothTime = 0.12f;
-    [SerializeField]
-    Vector3 rotationSmoothVelocity;
+    private float distanceFromTargetX;
 
     [SerializeField]
-    Transform target; // rotacionar em volta de um alvo, no caso o player
+    private float distanceFromTargetY;
 
     [SerializeField]
-    LayerMask cameraLayerMask;
+    private float pitchMin = -40;
+
+    [SerializeField]
+    private float pitchMax = 80;
+
+    [SerializeField]
+    private bool lockCursor;
+
+    private Vector3 currentRotation;
+
+    [SerializeField]
+    private float rotationSmoothTime = 0.12f;
+
+    [SerializeField]
+    private Vector3 rotationSmoothVelocity;
+
+    [SerializeField]
+    private Transform target; // rotacionar em volta de um alvo, no caso o player
+
+    [SerializeField]
+    private LayerMask cameraLayerMask;
 
     // Use this for initialization
-    void Start () {
-
-        if(lockCursor)
+    private void Start()
+    {
+        if (lockCursor)
         {
             //trava o cursor no centro da tela
             Cursor.lockState = CursorLockMode.Locked;
@@ -45,13 +48,12 @@ public class CameraScript : MonoBehaviour {
             Cursor.visible = false;
         }
 
-       // transform.eulerAngles = target.eulerAngles;
-	}
-	
-	// Update is called once per frame
-	void LateUpdate () {
+        // transform.eulerAngles = target.eulerAngles;
+    }
 
-        
+    // Update is called once per frame
+    private void LateUpdate()
+    {
         // input do mouse
         yaw += Input.GetAxis("Mouse X") * mouseSensitivity;
         pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
@@ -68,11 +70,9 @@ public class CameraScript : MonoBehaviour {
         transform.position = target.position - transform.forward * distanceFromTargetX + transform.up * distanceFromTargetY;
 
         CheckWall();
+    }
 
-
-	}
-
-    void CheckWall()
+    private void CheckWall()
     {
         RaycastHit hit;
         // inicio do raio
@@ -83,15 +83,13 @@ public class CameraScript : MonoBehaviour {
         //distancia do raio ( que é a distancia do player até a camera
         float dist = Vector3.Distance(transform.position, target.position);
 
-        if(Physics.Raycast(raystart,dir, out hit, dist, cameraLayerMask))
+        if (Physics.Raycast(raystart, dir, out hit, dist, cameraLayerMask))
         {
-
             float hitDistance = hit.distance;
 
             Vector3 castCenterHit = target.position + (dir.normalized * hitDistance);
 
             transform.position = castCenterHit;
         }
-
     }
 }

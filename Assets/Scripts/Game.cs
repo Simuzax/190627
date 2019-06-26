@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq; // algumas funcções adicionais
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
@@ -17,11 +15,11 @@ public class Game : MonoBehaviour
 
     //quantidade de inimigos para spawnar
     [SerializeField]
-    int quantityOfEnemies = 5;
+    private int quantityOfEnemies = 5;
 
     // Use this for initialization
-    void Start () {
-
+    private void Start()
+    {
         for (int i = 0; i < 6; i++)
         {
             for (int j = 0; j < 6; j++)
@@ -31,19 +29,17 @@ public class Game : MonoBehaviour
                 listCoins.Add(go.GetComponent<Coin>());
             }
         }
-
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-        if(listCoins.Count == 80)
+
+    // Update is called once per frame
+    private void Update()
+    {
+        if (listCoins.Count == 80)
         {
             print("POUCAS MOEDAS");
 
-            for(int i =0; i < quantityOfEnemies; i++)
+            for (int i = 0; i < quantityOfEnemies; i++)
             {
-
                 if (spawnPoints.Any()) // caso tenha algum elemento na lista
                 {
                     int pos = Random.Range(0, spawnPoints.Count - 1);
@@ -52,24 +48,22 @@ public class Game : MonoBehaviour
                     spawnPoints.RemoveAt(pos);
                 }
                 else break;
-                
             }
         }
-	}
+    }
 
     public void RemoveCoinFromList(GameObject coin)
     {
-        if(coin.GetComponent<Coin>())
+        if (coin.GetComponent<Coin>())
         {
             listCoins.Remove(coin.GetComponent<Coin>());
         }
     }
 
-    void spawnEnemy(Vector3 position)
+    private void spawnEnemy(Vector3 position)
     {
         GameObject go = Instantiate(inimigoPrefab, position, Quaternion.identity);
 
         listInimigos.Add(go.GetComponent<Inimigo>());
-
     }
 }

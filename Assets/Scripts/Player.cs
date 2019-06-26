@@ -6,40 +6,42 @@ public class Player : MonoBehaviour
     public float speed = 2f;
     public float jumpHeight = 5f;
     public int coinCount = 0;
-    public int hp = 10;
+    public int hp = 3;
 
     public float walkSpeed = 3f;
     public float runSpeed = 8f;
     public float gravity = -12f;
 
     [SerializeField]
-    float velocityY;
+    private float velocityY;
 
     [SerializeField]
-    bool running = false;
+    private bool running = false;
 
     [SerializeField]
-    Game game_ref;
+    private Game game_ref;
 
     public TextMeshProUGUI textoMoedas;
     public TextMeshProUGUI textoHP;
 
-    float smoothRotationVelocity;
-    [SerializeField]
-    float smoothRotationTime = 0.2f;
-
-    float smoothSpeedVelocity;
-    [SerializeField]
-    float smoothSpeedTime = 0.2f;
+    private float smoothRotationVelocity;
 
     [SerializeField]
-    Transform cameraT;
+    private float smoothRotationTime = 0.2f;
+
+    private float smoothSpeedVelocity;
 
     [SerializeField]
-    CharacterController charController;
+    private float smoothSpeedTime = 0.2f;
 
     [SerializeField]
-    Animator animator;
+    private Transform cameraT;
+
+    [SerializeField]
+    private CharacterController charController;
+
+    [SerializeField]
+    private Animator animator;
 
     // Use this for initialization
     private void Start()
@@ -64,7 +66,7 @@ public class Player : MonoBehaviour
     }
 
     //logica para andar rotacionando
-    void walkingRotating()
+    private void walkingRotating()
     {
         // pegar input do jogador
         // Input.getaxis retorna um valor de -1 a 1
@@ -75,7 +77,7 @@ public class Player : MonoBehaviour
         float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y;
         //rotação
         if (inputDir != Vector2.zero)
-            transform.eulerAngles = Vector3.up *Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref smoothRotationVelocity, smoothRotationTime);
+            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref smoothRotationVelocity, smoothRotationTime);
 
         running = (Input.GetKey(KeyCode.LeftShift));
 
@@ -91,8 +93,8 @@ public class Player : MonoBehaviour
         charController.Move(velocity * Time.deltaTime);
 
         speed = new Vector2(charController.velocity.x, charController.velocity.z).magnitude;
-        
-        if(charController.isGrounded)
+
+        if (charController.isGrounded)
         {
             velocityY = 0;
         }
@@ -108,13 +110,13 @@ public class Player : MonoBehaviour
         Jump();
     }
 
-    void Jump()
+    private void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (charController.isGrounded)
             {
-                if(animator.GetCurrentAnimatorStateInfo(0).IsName("Base Animation"))
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Base Animation"))
                 {
                     animator.Play("JumpUp");
                 }
@@ -125,7 +127,7 @@ public class Player : MonoBehaviour
     }
 
     //logica para andar sem rotacionar
-    void walkSideways()
+    private void walkSideways()
     {
         // pegar input do jogador
         // Input.getaxis retorna um valor de -1 a 1
