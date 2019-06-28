@@ -107,6 +107,7 @@ public class Player : MonoBehaviour
             animator.SetFloat("velocityY", velocityY);
             animator.SetBool("spaceDown", Input.GetKeyDown(KeyCode.Space));
         }
+
         Jump();
     }
 
